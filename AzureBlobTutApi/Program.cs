@@ -5,7 +5,7 @@ using AzureBlobTutApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("appsettings.json").Build();
+//builder.Configuration.AddJsonFile("appsettings.json").Build();
 builder.Configuration.AddEnvironmentVariables();
 
 var AzureSetting = builder.Configuration.GetSection("AppSettings:AzureSettings").Get<AzureSettings>();
