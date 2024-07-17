@@ -5,14 +5,15 @@ using AzureBlobTutApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-var test = MyConfig.GetSection("AppSettings:AzureSettings");
-var AzureSetting = MyConfig.GetSection("AppSettings:AzureSettings").Get<AzureSettings>();
+builder.Configuration.AddJsonFile("appsettings.json").Build();
+builder.Configuration.AddEnvironmentVariables();
+
+var AzureSetting = builder.Configuration.GetSection("AppSettings:AzureSettings").Get<AzureSettings>();
 // Add services to the container.
 
-    //Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", AzureSetting.AZURE_CLIENT_SECRET);
-    //Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", AzureSetting.AZURE_CLIENT_ID);
-    //Environment.SetEnvironmentVariable("AZURE_TENANT_ID", AzureSetting.AZURE_TENANT_ID);
+Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", AzureSetting.AZURE_CLIENT_SECRET);
+Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", AzureSetting.AZURE_CLIENT_ID);
+Environment.SetEnvironmentVariable("AZURE_TENANT_ID", AzureSetting.AZURE_TENANT_ID);
 
    Uri blobUri = new Uri(AzureSetting.AZURE_BLOB_URL);
 builder.Services.AddAzureClients(builder =>
